@@ -24,7 +24,7 @@ Voir le schema et les fichiers ".json" dans le dossier "HHeinle_IDM_UNO_JSON".
   J'écrirais un parser JSON prenant un fichier "ma_variante.json" en entrée et créant en sortie un fichier .txt ou .html. De la même façon que le point précédent, une template sera générée avec des parties variables récupérées depuis le fichier "ma_variante.json"
 
 ### Q4: (Bonus): Implémenter un tel générateur avec la technologie de votre choix.
-Voir le générateur HtmlCompiler.java dans le package "tests" du dossier "HHeinle_IDM_UNO_DSL".
+Voir le générateur HtmlCompiler.java dans le package "tests" du dossier "HHeinle_IDM_UNO_DSL". Le fichier "MyUnoParsingTest.xtend" lance 2 tests de ce générateur de page HTML.
 
 ### Q5: On souhaite transformer un programme écrit dans votre DSL (cf Q2) en fichier JSON (et vice-versa). Comment développeriez-vous cette transformation? 
 
