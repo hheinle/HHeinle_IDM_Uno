@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+C:\Users\heleneh\Documents\Etudes\M2_MIAGE\IDM\Exo_UNO\HHeinle_IDM_UNO\.metadata\.plugins\org.eclipse.jdt.core
+2518243074.index
+829957170.index

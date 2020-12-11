@@ -1,0 +1,26 @@
+{
+	"nom_variante": "variante inventee 2",
+	"Depart": {
+		"etat_main": "visible",
+		"nb_mains": 3,
+		"nb_cartes_main": 7,
+		"nb_talons": 1
+	},
+	"Manche": {
+		"Nb_cartes_jouables": "plusieurs_a_la_fois_autorise",
+		"Pioche": {
+			"nb_cartes_a_piocher": "une_seule",
+			"jouer_apres_pioche": true
+		}
+	},
+	"Fin_manche": {
+		"dire_uno_obligatoire": false,
+		"Points_manche": {
+			"vainqueur_manche": "manche_gagnee",
+			"perdants_manche": "pm_zero_pts"
+		}
+	},
+	"Fin_Partie": {
+		"vainqueur_total": "nb_manches_gagnees"
+	}
+}

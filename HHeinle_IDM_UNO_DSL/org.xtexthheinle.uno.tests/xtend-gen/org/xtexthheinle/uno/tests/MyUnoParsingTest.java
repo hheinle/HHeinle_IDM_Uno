@@ -1,0 +1,211 @@
+package org.xtexthheinle.uno.tests;
+
+import com.google.inject.Inject;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.testing.InjectWith;
+import org.eclipse.xtext.testing.extensions.InjectionExtension;
+import org.eclipse.xtext.testing.util.ParseHelper;
+import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.xtexthheinle.uno.myUno.Variante_UNO;
+import org.xtexthheinle.uno.tests.HtmlCompiler;
+import org.xtexthheinle.uno.tests.MyUnoInjectorProvider;
+
+@ExtendWith(InjectionExtension.class)
+@InjectWith(MyUnoInjectorProvider.class)
+@SuppressWarnings("all")
+public class MyUnoParsingTest {
+  @Inject
+  private ParseHelper<Variante_UNO> parseHelper;
+  
+  @Test
+  public void testCompileReglesOfficielles() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("nom_variante \'regles officielles\'{");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("Depart: ");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("etat_main: cachee");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("nb_mains: 1");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("nb_cartes_main: 7");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("nb_talons: 1");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append(";");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("Manche: ");
+      _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("Inversion(avec_carte_inversion)");
+      _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("Nb_cartes_jouables(une_par_une)");
+      _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("Pioche(nb_cartes_a_piocher: une_seule jouer_apres_pioche: droit_de_jouer)");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append(";");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("Fin_manche:");
+      _builder.newLine();
+      _builder.append("    \t");
+      _builder.append("dire_uno_obligatoire");
+      _builder.newLine();
+      _builder.append("    \t");
+      _builder.append("Points_manche(vainqueur_manche: vm_pts_selon_carte_adversaires perdants_manche: pm_zero_pts)");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append(";");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("Fin_Partie: ");
+      _builder.newLine();
+      _builder.append("    \t");
+      _builder.append("vainqueur_total(score_le_plus_grd)");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append(";");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.newLine();
+      _builder.append("}");
+      final Variante_UNO result = this.parseHelper.parse(_builder);
+      Assertions.assertNotNull(result);
+      final EList<Resource.Diagnostic> errors = result.eResource().getErrors();
+      boolean _isEmpty = errors.isEmpty();
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("Unexpected errors: ");
+      String _join = IterableExtensions.join(errors, ", ");
+      _builder_1.append(_join);
+      Assertions.assertTrue(_isEmpty, _builder_1.toString());
+      final HtmlCompiler cmHtml = new HtmlCompiler(result);
+      cmHtml.compileAndRun();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Test
+  public void testCompileReglesInventees1() {
+    try {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("nom_variante \'regles inventées 1\'{");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("Depart: ");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("etat_main: cachee");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("nb_mains: 3");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("nb_cartes_main: 4");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("nb_talons: 3");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("riviere");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("temps_limite: 9");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append(";");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("Manche: ");
+      _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("Inversion(avec_carte_sept avec_carte_inversion)");
+      _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("Tourner_mains(avec_carte_uno avec_carte_zero)");
+      _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("Nb_cartes_jouables(plusieurs_a_la_fois_autorise)");
+      _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("Cartes_1_a_9(suites suites_royales interception {mm_nb_couleur})");
+      _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("Pioche(nb_cartes_a_piocher: au_plus_trois jouer_apres_pioche: droit_de_jouer)");
+      _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("Cumul(cumul_carte_couleur cumul_carte_uno cumul_plus_2 cumul_plus_4)");
+      _builder.newLine();
+      _builder.append("\t    ");
+      _builder.append("Contestations(plus4_contestable inter_contestable)");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append(";");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("Fin_manche:");
+      _builder.newLine();
+      _builder.append("    \t");
+      _builder.append("dire_uno_obligatoire");
+      _builder.newLine();
+      _builder.append("    \t");
+      _builder.append("Points_manche(vainqueur_manche: manche_gagnee perdants_manche: pm_zero_pts)");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append(";");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("Fin_Partie: ");
+      _builder.newLine();
+      _builder.append("    \t");
+      _builder.append("vainqueur_total(nb_manches_gagnees)");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append(";");
+      _builder.newLine();
+      _builder.append("}");
+      final Variante_UNO result = this.parseHelper.parse(_builder);
+      Assertions.assertNotNull(result);
+      final EList<Resource.Diagnostic> errors = result.eResource().getErrors();
+      boolean _isEmpty = errors.isEmpty();
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.append("Unexpected errors: ");
+      String _join = IterableExtensions.join(errors, ", ");
+      _builder_1.append(_join);
+      Assertions.assertTrue(_isEmpty, _builder_1.toString());
+      final HtmlCompiler cmHtml = new HtmlCompiler(result);
+      cmHtml.compileAndRun();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+}

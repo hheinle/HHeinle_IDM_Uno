@@ -1,0 +1,10 @@
+ {
+     "nom_variante": "regles officielles",
+     "Depart": {
+         "etat_main": "visible",
+         "nb_mains": "un",
+         "nb_cartes_main": "sept",
+         "nb_talons": "un"
+     }
+     
+ }

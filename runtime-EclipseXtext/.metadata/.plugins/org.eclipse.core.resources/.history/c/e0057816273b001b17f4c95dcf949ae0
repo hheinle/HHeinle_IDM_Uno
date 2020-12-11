@@ -1,0 +1,28 @@
+nom_variante 'regles officielles'{
+	Depart: 
+		etat_main: visible
+		nb_mains: trois_mains
+		nb_cartes_main: cinq_cartes
+		nb_talons: trois
+		temps_limite 7
+	;
+	
+	Manche: 
+	    Inversion(avec_carte_sept )
+	    Nb_cartes_jouables(plusieurs_a_la_fois_autorise)
+	    Cartes_1_a_9(suites interception {mm_couleur})
+	    Pioche(nb_cartes_a_piocher: une_seule jouer_apres_pioche: droit_de_jouer)
+	    Cumul(cumul_carte_couleur cumul_carte_uno cumul_plus_2)
+	    Contestations(inter_contestable)
+    ;
+    
+    Fin_manche:
+    	dire_uno_obligatoire
+    	Points_manche(vainqueur_manche: vm_zero_pts perdants_manche: pm_pts_selon_cartes_restantes{elimination_si_500_pts})
+    ;
+    
+    Fin_Partie: 
+    	vainqueur_total (nb_manches_gagnees)
+    ;
+      
+}

@@ -1,0 +1,13 @@
+INDEX VERSION 1.131+C:\Users\heleneh\Documents\Etudes\M2_MIAGE\IDM\Exo_UNO\HHeinle_IDM_UNO_Json\.metadata\.plugins\org.eclipse.jdt.core
+3545231461.index
+2394290781.index
+1880479794.index
+829957170.index
+2552351448.index
+903704696.index
+2333924107.index
+3377636766.index
+3766969487.index
+3902542870.index
+2442324379.index
+1867201969.index

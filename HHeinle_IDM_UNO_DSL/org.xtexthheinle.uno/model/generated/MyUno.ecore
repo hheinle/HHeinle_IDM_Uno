@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="myUno" nsURI="http://www.xtexthheinle.org/uno/MyUno" nsPrefix="myUno">
+  <eClassifiers xsi:type="ecore:EClass" name="Variante_UNO">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="configuration_depart" eType="#//Configuration_Depart"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="manche" eType="#//Manche"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fin_manche" eType="#//Fin_Manche"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fin_partie" eType="#//Fin_Partie"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Configuration_Depart">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="main" eType="#//Main" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="talon" eType="#//Talon"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="riviere" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="temps_limite" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="secondes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Main">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="etat_main" eType="#//Etat_Main"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nb_mains" eType="#//Nb_Mains"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nb_cartes_mains" eType="#//Nb_Cartes_Mains"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Etat_Main">
+    <eLiterals name="visible" literal="visible"/>
+    <eLiterals name="cachee" value="1" literal="cachee"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Nb_Mains">
+    <eLiterals name="une_main" literal="1"/>
+    <eLiterals name="trois_mains" value="1" literal="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Nb_Cartes_Mains">
+    <eLiterals name="sept_cartes" literal="7"/>
+    <eLiterals name="quatre_cartes" value="1" literal="4"/>
+    <eLiterals name="cinq_cartes" value="2" literal="5"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Talon">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nb_talons" eType="#//Nb_Talons"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Nb_Talons">
+    <eLiterals name="un_talon" literal="1"/>
+    <eLiterals name="trois_talons" value="1" literal="3"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Manche">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inversion" eType="#//Inversion"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tourner_les_mains" eType="#//Tourner_les_mains"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nb_cartes_jouables" eType="#//Nb_cartes_jouables"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cartes_1_9" eType="#//Cartes_1_9"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pioche" eType="#//Pioche"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cumul" eType="#//Cumul"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contestations" eType="#//Contestations"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Inversion">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="avec_carte_inversion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="avec_carte_sept" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Tourner_les_mains">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="avec_carte_zero" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="avec_carte_uno" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Nb_cartes_jouables">
+    <eLiterals name="une_par_une" literal="une_par_une"/>
+    <eLiterals name="plusieurs_a_la_fois_autorise" value="1" literal="plusieurs_a_la_fois_autorise"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cartes_1_9">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="suites" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="suites_royales" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="interception" eType="#//Interception"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Interception">
+    <eLiterals name="mm_nb" literal="mm_nb"/>
+    <eLiterals name="mm_couleur" value="1" literal="mm_couleur"/>
+    <eLiterals name="mm_nb_couleur" value="2" literal="mm_nb_couleur"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Pioche">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nb_cartes_a_piocher" eType="#//Nb_cartes_a_piocher"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jouer_apres_pioche" eType="#//Jouer_apres_pioche"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Nb_cartes_a_piocher">
+    <eLiterals name="une_seule" literal="une_seule"/>
+    <eLiterals name="au_plus_trois" value="1" literal="au_plus_trois"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Jouer_apres_pioche">
+    <eLiterals name="droit_de_jouer" literal="droit_de_jouer"/>
+    <eLiterals name="pas_droit_de_jouer" value="1" literal="pas_droit_de_jouer"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cumul">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cumul_plus_2" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cumul_plus_4" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cumul_carte_couleur" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="cumul_carte_uno" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Contestations">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inter_contestable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="plus4_contestable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Fin_Manche">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dire_uno_obligatoire" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="points_manche" eType="#//Points_manche"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Points_manche">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vainqueur_manche" eType="#//Vainqueur_manche"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="perdants_manche" eType="#//Perdants_manche"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Vainqueur_manche">
+    <eLiterals name="manche_gagnee" literal="manche_gagnee"/>
+    <eLiterals name="vm_pts_selon_carte_adversaires" value="1" literal="vm_pts_selon_carte_adversaires"/>
+    <eLiterals name="vm_zero_pts" value="2" literal="vm_zero_pts"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Perdants_manche">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pm_zero_pts" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pm_pts_selon_cartes_restantes"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Fin_Partie">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vainqueur_total" eType="#//Vainqueur_total"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Vainqueur_total">
+    <eLiterals name="score_le_plus_grd" literal="score_le_plus_grd"/>
+    <eLiterals name="nb_manches_gagnees" value="1" literal="nb_manches_gagnees"/>
+    <eLiterals name="moins_de_500_pts" value="2" literal="moins_de_500_pts"/>
+    <eLiterals name="score_le_plus_petit" value="3" literal="score_le_plus_petit"/>
+  </eClassifiers>
+</ecore:EPackage>

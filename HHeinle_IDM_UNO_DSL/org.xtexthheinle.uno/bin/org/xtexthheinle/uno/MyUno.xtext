@@ -1,0 +1,147 @@
+grammar org.xtexthheinle.uno.MyUno with org.eclipse.xtext.common.Terminals
+
+generate myUno "http://www.xtexthheinle.org/uno/MyUno"
+
+Variante_UNO:
+	'nom_variante' name=STRING
+	'{'
+	configuration_depart=Configuration_Depart
+	manche=Manche
+	fin_manche=Fin_Manche
+	fin_partie=Fin_Partie
+	'}'
+;
+
+//=======Configuration_Depart=======
+Configuration_Depart:
+	'Depart'':'
+	main=Main
+	talon=Talon
+	riviere='riviere'?
+	(temps_limite='temps_limite:' secondes=INT)?
+	';'
+;
+
+Main:
+	'etat_main'':' etat_main=Etat_Main
+	'nb_mains'':' nb_mains=Nb_Mains
+	'nb_cartes_main'':' nb_cartes_mains=Nb_Cartes_Mains
+;
+
+enum Etat_Main:
+	visible = 'visible' | cachee = 'cachee'
+;
+
+enum Nb_Mains:
+	une_main = '1' | trois_mains = '3'
+;
+enum Nb_Cartes_Mains:
+	sept_cartes = '7' | quatre_cartes = '4' | cinq_cartes = '5'
+;
+
+Talon:
+	'nb_talons'':' nb_talons=Nb_Talons
+;
+enum Nb_Talons:
+	un_talon = '1' | trois_talons = '3'
+;
+
+//=======Manche=======
+Manche:
+	'Manche'':'
+	 ('Inversion''(' inversion=Inversion ')')?
+	 ('Tourner_mains''('tourner_les_mains=Tourner_les_mains ')')?
+	 'Nb_cartes_jouables''(' nb_cartes_jouables=Nb_cartes_jouables ')'
+	 ('Cartes_1_a_9''('cartes_1_9=Cartes_1_9')')?
+	 pioche=Pioche
+	 ('Cumul''(' cumul=Cumul ')')?
+	 ('Contestations''(' contestations=Contestations ')')?
+	';'
+;
+
+Inversion:
+	 avec_carte_inversion = 'avec_carte_inversion'?
+&	 avec_carte_sept = 'avec_carte_sept'?
+;
+
+Tourner_les_mains:
+	 avec_carte_zero = 'avec_carte_zero'?
+&	 avec_carte_uno = 'avec_carte_uno'?
+;
+
+enum Nb_cartes_jouables:
+	 une_par_une = 'une_par_une' | plusieurs_a_la_fois_autorise = 'plusieurs_a_la_fois_autorise'
+;
+
+Cartes_1_9:
+	suites='suites'?
+&	suites_royales='suites_royales'?
+&	('interception''{'interception=Interception'}')?
+;
+
+enum Interception:
+	mm_nb = 'mm_nb' | mm_couleur = 'mm_couleur' | mm_nb_couleur = 'mm_nb_couleur'
+;
+
+Pioche:
+	'Pioche''('
+	'nb_cartes_a_piocher:' nb_cartes_a_piocher=Nb_cartes_a_piocher
+	'jouer_apres_pioche:' jouer_apres_pioche=Jouer_apres_pioche
+	')'
+;
+
+enum Nb_cartes_a_piocher:
+	une_seule = 'une_seule' | au_plus_trois = 'au_plus_trois'
+;
+
+enum Jouer_apres_pioche:
+	droit_de_jouer = 'droit_de_jouer' | pas_droit_de_jouer = 'pas_droit_de_jouer'
+;
+
+Cumul:
+	cumul_plus_2 = 'cumul_plus_2'?
+&	cumul_plus_4 = 'cumul_plus_4'?
+&	cumul_carte_couleur = 'cumul_carte_couleur'?
+&	cumul_carte_uno = 'cumul_carte_uno'?
+;	
+
+Contestations:
+	inter_contestable = 'inter_contestable'?
+&	plus4_contestable = 'plus4_contestable'?
+;
+
+//=======Fin_Manche=======
+Fin_Manche:
+	'Fin_manche'':'
+	dire_uno_obligatoire = 'dire_uno_obligatoire'?
+	points_manche=Points_manche
+	';'
+;
+
+Points_manche:
+	'Points_manche''('
+	'vainqueur_manche:' vainqueur_manche=Vainqueur_manche
+	'perdants_manche:' perdants_manche=Perdants_manche
+	')'
+;
+
+enum Vainqueur_manche:
+	manche_gagnee = 'manche_gagnee' | vm_pts_selon_carte_adversaires = 'vm_pts_selon_carte_adversaires' | vm_zero_pts = 'vm_zero_pts'
+;
+
+Perdants_manche:
+	{Perdants_manche} pm_zero_pts = 'pm_zero_pts'? 
+	(pm_pts_selon_cartes_restantes='pm_pts_selon_cartes_restantes'('{' 'elimination_si_500_pts' '}')?)?;
+
+
+//=======Fin_Partie=======
+Fin_Partie:
+	'Fin_Partie'':'
+	'vainqueur_total''('vainqueur_total=Vainqueur_total')'
+	';'
+;
+
+enum Vainqueur_total:
+	 score_le_plus_grd = 'score_le_plus_grd' | nb_manches_gagnees = 'nb_manches_gagnees'
+	 | moins_de_500_pts = 'moins_de_500_pts' | score_le_plus_petit = 'score_le_plus_petit'
+;

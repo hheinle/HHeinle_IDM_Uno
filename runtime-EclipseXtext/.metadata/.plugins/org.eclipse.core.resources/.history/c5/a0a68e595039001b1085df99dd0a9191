@@ -1,0 +1,9 @@
+nom_variante 'regles officielles'{
+	Depart: 
+	etat_main: cachee
+	nb_mains: une_main
+	nb_cartes_main: sept_cartes
+	nb_talons: un
+	;
+	Manche:
+		)

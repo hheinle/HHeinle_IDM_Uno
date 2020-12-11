@@ -1,0 +1,30 @@
+nom_variante 'regles inventées 1'{
+	Depart: 
+		etat_main: cachee
+		nb_mains: 3
+		nb_cartes_main: 4
+		nb_talons: 3
+		riviere
+		temps_limite: 9
+	;
+	
+	Manche: 
+	    Inversion(avec_carte_sept avec_carte_inversion)
+	    Tourner_mains(avec_carte_uno avec_carte_zero)
+	    Nb_cartes_jouables(plusieurs_a_la_fois_autorise)
+	    Cartes_1_a_9(suites suites_royales interception {mm_nb_couleur})
+	    Pioche(nb_cartes_a_piocher: au_plus_trois jouer_apres_pioche: droit_de_jouer)
+	    Cumul(cumul_carte_couleur cumul_carte_uno cumul_plus_2 cumul_plus_4)
+	    Contestations(plus4_contestable inter_contestable)
+    ;
+    
+    Fin_manche:
+    	dire_uno_obligatoire
+    	Points_manche(vainqueur_manche: vm_zero_pts perdants_manche: pm_pts_selon_cartes_restantes{elimination_si_500_pts})
+    ;
+    
+    Fin_Partie: 
+    	vainqueur_total (nb_manches_gagnees)
+    ;
+      
+}

@@ -1,0 +1,357 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"$id": "http://example.com/example.json",
+	"title": "The root schema",
+	"type": "object",
+	"description": "The root schema for JSON Uno's configurations.",
+	"properties": {
+		"nom_variante": {
+			"$id": "#/properties/nom_variante",
+			"type": "string",
+			"description": "Nom de la variante"
+		},
+		"Depart": {
+			"$id": "#/properties/Depart",
+			"type": "object",
+			"description": "An explanation about the purpose of this instance.",
+			"properties": {
+				"etat_main": {
+					"$id": "#/properties/Depart/properties/etat_main",
+					"type": "string",
+					"enum": [
+						"visible",
+						"cachee"
+					]
+				},
+				"nb_mains": {
+					"$id": "#/properties/Depart/properties/nb_mains",
+					"description": "An explanation about the purpose of this instance.",
+					"type": "integer",
+					"enum": [
+						1,
+						3
+					]
+				},
+				"nb_cartes_main": {
+					"$id": "#/properties/Depart/properties/nb_cartes_main",
+					"description": "An explanation about the purpose of this instance.",
+					"type": "integer",
+					"enum": [
+						7,
+						4,
+						5
+					]
+				},
+				"nb_talons": {
+					"$id": "#/properties/Depart/properties/nb_talons",
+					"description": "An explanation about the purpose of this instance.",
+					"type": "integer",
+					"enum": [
+						1,
+						3
+					]
+				}
+			},
+			"required": [
+				"etat_main",
+				"nb_mains",
+				"nb_cartes_main",
+				"nb_talons"
+			]
+		},
+		"Manche": {
+			"$id": "#/properties/Manche",
+			"type": "object",
+			"title": "The Manche schema",
+			"description": "An explanation about the purpose of this instance.",
+			"properties": {
+				"Inversion": {
+					"$id": "#/properties/Manche/properties/Inversion",
+					"type": "array",
+					"title": "The Inversion schema",
+					"description": "An explanation about the purpose of this instance.",
+					"additionalItems": true,
+					"items": {
+						"$id": "#/properties/Manche/properties/Inversion/items",
+						"anyOf": [
+							{
+								"$id": "#/properties/Manche/properties/Inversion/items/anyOf/0",
+								"type": "string",
+								"title": "The first anyOf schema",
+								"description": "An explanation about the purpose of this instance.",
+								"default": "",
+								"examples": [
+									"avec_carte_inversion",
+									"avec_carte_sept"
+								]
+							}
+						]
+					}
+				},
+				"Nb_cartes_jouables": {
+					"$id": "#/properties/Manche/properties/Nb_cartes_jouables",
+					"type": "array",
+					"title": "The Nb_cartes_jouables schema",
+					"description": "An explanation about the purpose of this instance.",
+					"additionalItems": true,
+					"items": {
+						"$id": "#/properties/Manche/properties/Nb_cartes_jouables/items",
+						"anyOf": [
+							{
+								"$id": "#/properties/Manche/properties/Nb_cartes_jouables/items/anyOf/0",
+								"type": "string",
+								"title": "The first anyOf schema",
+								"description": "An explanation about the purpose of this instance.",
+								"default": "",
+								"examples": [
+									"une_par_une"
+								]
+							}
+						]
+					}
+				},
+				"Cartes_1_a_9:": {
+					"$id": "#/properties/Manche/properties/Cartes_1_a_9%3A",
+					"type": "array",
+					"title": "The Cartes_1_a_9: schema",
+					"description": "An explanation about the purpose of this instance.",
+					"additionalItems": true,
+					"items": {
+						"$id": "#/properties/Manche/properties/Cartes_1_a_9%3A/items",
+						"anyOf": [
+							{
+								"$id": "#/properties/Manche/properties/Cartes_1_a_9%3A/items/anyOf/0",
+								"type": "string",
+								"title": "The first anyOf schema",
+								"description": "An explanation about the purpose of this instance.",
+								"default": "",
+								"examples": [
+									"suites",
+									"interception"
+								]
+							}
+						]
+					}
+				},
+				"Pioche": {
+					"$id": "#/properties/Manche/properties/Pioche",
+					"type": "object",
+					"title": "The Pioche schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": {
+					},
+					"examples": [
+						{
+							"nb_cartes_a_piocher": "une_seule",
+							"jouer_apres_pioche": "droit_de_jouer"
+						}
+					],
+					"required": [
+						"nb_cartes_a_piocher",
+						"jouer_apres_pioche"
+					],
+					"properties": {
+						"nb_cartes_a_piocher": {
+							"$id": "#/properties/Manche/properties/Pioche/properties/nb_cartes_a_piocher",
+							"type": "string",
+							"title": "The nb_cartes_a_piocher schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"une_seule"
+							]
+						},
+						"jouer_apres_pioche": {
+							"$id": "#/properties/Manche/properties/Pioche/properties/jouer_apres_pioche",
+							"type": "string",
+							"title": "The jouer_apres_pioche schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"droit_de_jouer"
+							]
+						}
+					},
+					"additionalProperties": true
+				},
+				"Cumul": {
+					"$id": "#/properties/Manche/properties/Cumul",
+					"type": "array",
+					"title": "The Cumul schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": [
+					],
+					"examples": [
+						[
+							"cumul_carte_couleur",
+							"cumul_carte_uno"
+						]
+					],
+					"additionalItems": true,
+					"items": {
+						"$id": "#/properties/Manche/properties/Cumul/items",
+						"anyOf": [
+							{
+								"$id": "#/properties/Manche/properties/Cumul/items/anyOf/0",
+								"type": "string",
+								"title": "The first anyOf schema",
+								"description": "An explanation about the purpose of this instance.",
+								"default": "",
+								"examples": [
+									"cumul_carte_couleur",
+									"cumul_carte_uno"
+								]
+							}
+						]
+					}
+				},
+				"Contestations": {
+					"$id": "#/properties/Manche/properties/Contestations",
+					"type": "array",
+					"title": "The Contestations schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": [
+					],
+					"examples": [
+						[
+							"inter_contestable"
+						]
+					],
+					"additionalItems": true,
+					"items": {
+						"$id": "#/properties/Manche/properties/Contestations/items",
+						"anyOf": [
+							{
+								"$id": "#/properties/Manche/properties/Contestations/items/anyOf/0",
+								"type": "string",
+								"title": "The first anyOf schema",
+								"description": "An explanation about the purpose of this instance.",
+								"default": "",
+								"examples": [
+									"inter_contestable"
+								]
+							}
+						]
+					}
+				}
+			},
+			"required": [
+				"Inversion",
+				"Nb_cartes_jouables",
+				"Cartes_1_a_9:",
+				"Pioche",
+				"Cumul",
+				"Contestations"
+			]
+		},
+		"Fin_manche": {
+			"$id": "#/properties/Fin_manche",
+			"type": "object",
+			"title": "The Fin_manche schema",
+			"description": "An explanation about the purpose of this instance.",
+			"default": {
+			},
+			"examples": [
+				{
+					"dire_uno_obligatoire": "dire_uno_obligatoire",
+					"Points_manche": {
+						"vainqueur_manche": "vm_pts_selon_carte_adversaires",
+						"perdants_manche": "pm_zero_pts"
+					}
+				}
+			],
+			"properties": {
+				"dire_uno_obligatoire": {
+					"$id": "#/properties/Fin_manche/properties/dire_uno_obligatoire",
+					"type": "string",
+					"title": "The dire_uno_obligatoire schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						"dire_uno_obligatoire"
+					]
+				},
+				"Points_manche": {
+					"$id": "#/properties/Fin_manche/properties/Points_manche",
+					"type": "object",
+					"title": "The Points_manche schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": {
+					},
+					"examples": [
+						{
+							"vainqueur_manche": "vm_pts_selon_carte_adversaires",
+							"perdants_manche": "pm_zero_pts"
+						}
+					],
+					"required": [
+						"vainqueur_manche",
+						"perdants_manche"
+					],
+					"properties": {
+						"vainqueur_manche": {
+							"$id": "#/properties/Fin_manche/properties/Points_manche/properties/vainqueur_manche",
+							"type": "string",
+							"title": "The vainqueur_manche schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"vm_pts_selon_carte_adversaires"
+							]
+						},
+						"perdants_manche": {
+							"$id": "#/properties/Fin_manche/properties/Points_manche/properties/perdants_manche",
+							"type": "string",
+							"title": "The perdants_manche schema",
+							"description": "An explanation about the purpose of this instance.",
+							"default": "",
+							"examples": [
+								"pm_zero_pts"
+							]
+						}
+					},
+					"additionalProperties": true
+				}
+			},
+			"required": [
+				"dire_uno_obligatoire",
+				"Points_manche"
+			]
+		},
+		"Fin_Partie": {
+			"$id": "#/properties/Fin_Partie",
+			"type": "object",
+			"title": "The Fin_Partie schema",
+			"description": "An explanation about the purpose of this instance.",
+			"default": {
+			},
+			"examples": [
+				{
+					"vainqueur_total": "nb_manches_gagnees"
+				}
+			],
+			"properties": {
+				"vainqueur_total": {
+					"$id": "#/properties/Fin_Partie/properties/vainqueur_total",
+					"type": "string",
+					"title": "The vainqueur_total schema",
+					"description": "An explanation about the purpose of this instance.",
+					"default": "",
+					"examples": [
+						"nb_manches_gagnees"
+					]
+				}
+			},
+			"required": [
+				"vainqueur_total"
+			]
+		}
+	},
+	"required": [
+		"nom_variante",
+		"Depart",
+		"Manche",
+		"Fin_manche",
+		"Fin_Partie"
+	]
+}

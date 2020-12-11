@@ -1,0 +1,9 @@
+ {
+     "nom_variante": "regles officielles",
+     "Depart": {
+         "etat_main": "cachee",
+         "nb_mains": 1,
+         "nb_cartes_main": 7,
+         "nb_talons": 1
+     }
+ }
