@@ -1,0 +1,77 @@
+<html>
+<title>regles inventées 1</title>
+	
+	<body>
+		<h1>regles inventées 1</h1>
+		
+		<h2>Configuration de départ : </h2>
+			<p>Pour cette variante, chaque joueur se voit distribuer 
+			3 main(s) de
+			4 cartes. Une main de joueur doit être 
+			cachee.
+			<p>
+				
+			<p>Il doit y avoir une rivière. 
+			C'est-à-dire qu'il doit y avoir 4 cartes à côté du talon.
+			</p>
+			<p>Les joueurs disposent de 9
+			secondes durant leur tour pour jouer leur(s) carte(s).
+			</p>
+			
+		<h2>Déroulement d'une manche : </h2>
+			<p>Un joueur peut poser 
+				plusieurs cartes par tour.
+			</p>
+			<h3>Inversion du sens de jeu : </h3>
+			<p>Le sens du jeu peut changer à l'aide de : <ul>
+				<li>la carte inversion classique</li>
+				<li>les cartes avec le chiffre sept</li>
+			</ul>
+			<h3>Tourner les mains : </h3>
+			<p>Tous les joueurs échangent leurs mains dans le sens du sens actuel à l'aide de : <ul>
+				<li>la carte UNO</li>
+				<li>Les cartes avec le chiffre zero</li>
+			</ul>
+			</p>
+			<h3>Pioche : </h3><p>Quand un joueur doit piocher, il peut piocher 
+			jusqu'à trois cartes.
+			</p>
+			<p>Après avoir piocher, le joueur 
+			n'a pas le droit de jouer.
+			</p>
+			<h3>Contestations : </h3>
+			<p>Les adversaires peuvent contester l'action du joueur : <ul>
+			<li>s'il fait une interception</li>
+			<li>s'il pose une carte +4</li>
+			</ul>
+			</p>
+			<h3>Cumul de cartes : </h3>
+			<p>Il est possible de cumuler les cartes : <ul>
+			<li>les cartes +2</li>
+			<li>les cartes +4</li>
+			<li>les cartes couleur</li>
+			<li>les cartes Uno</li>
+			</ul>
+			</p>
+			<h3>Effets sur les cartes 1 à 9 : </h3><ul>
+			<li>les suites sont autorisées</li>
+			<li>les suites royales sont autorisées</li>
+			<li>il est possible d'interrompre ces suites en posant une carte de 
+			même nombre et de même couleur.
+			</li>
+			
+			
+			
+			<h2>Fin de manche : </h2>
+			<p>Les joueurs doivent annoncer "UNO" en jouant leurs avant-dernières cartes.</p>
+			<p>Le premier joueur à s'être débarassé de toutes ses cartes remporte la manche. 
+			Ce joueur ne marque pas de points.
+			</p>
+			</p>
+		
+		<h2>Fin de la partie : </h2>
+			<p>Le vainqueur de la partie est le joueur qui 
+			a le plus petit score.
+		</p>
+	</body>
+</html>

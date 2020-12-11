@@ -1,0 +1,93 @@
+package org.xtexthheinle.uno.tests
+
+import com.google.inject.Inject
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.extensions.InjectionExtension
+import org.eclipse.xtext.testing.util.ParseHelper
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.^extension.ExtendWith
+import org.xtexthheinle.uno.myUno.Variante_UNO
+
+@ExtendWith(InjectionExtension)
+@InjectWith(MyUnoInjectorProvider)
+class MyUnoParsingTest {
+	@Inject
+	ParseHelper<Variante_UNO> parseHelper
+	
+	
+	@Test
+	def void testCompileReglesOfficielles() {
+		val result = parseHelper.parse('''
+			nom_variante 'regles officielles'{
+				Depart: 
+					etat_main: cachee
+					nb_mains: 1
+					nb_cartes_main: 7
+					nb_talons: 1
+				;
+				
+				Manche: 
+				    Inversion(avec_carte_inversion)
+				    Nb_cartes_jouables(une_par_une)
+				    Pioche(nb_cartes_a_piocher: une_seule jouer_apres_pioche: droit_de_jouer)
+			    ;
+			    
+			    Fin_manche:
+			    	dire_uno_obligatoire
+			    	Points_manche(vainqueur_manche: vm_pts_selon_carte_adversaires perdants_manche: pm_zero_pts)
+			    ;
+			    
+			    Fin_Partie: 
+			    	vainqueur_total(score_le_plus_grd)
+			    ;
+			      
+			}''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		
+		val HtmlCompilerXtend cmHtml = new HtmlCompilerXtend(result)
+		cmHtml.compileAndRun
+	}
+	
+	@Test
+	def void testCompileReglesInventees1() {
+		val result = parseHelper.parse('''
+			nom_variante 'regles inventées 1'{
+				Depart: 
+					etat_main: cachee
+					nb_mains: 3
+					nb_cartes_main: 4
+					nb_talons: 3
+					riviere
+					temps_limite: 9
+				;
+				
+				Manche: 
+				    Inversion(avec_carte_sept avec_carte_inversion)
+				    Tourner_mains(avec_carte_uno avec_carte_zero)
+				    Nb_cartes_jouables(plusieurs_a_la_fois_autorise)
+				    Cartes_1_a_9(suites suites_royales interception {mm_nb_couleur})
+				    Pioche(nb_cartes_a_piocher: au_plus_trois jouer_apres_pioche: droit_de_jouer)
+				    Cumul(cumul_carte_couleur cumul_carte_uno cumul_plus_2 cumul_plus_4)
+				    Contestations(plus4_contestable inter_contestable)
+			    ;
+			    
+			    Fin_manche:
+			    	dire_uno_obligatoire
+			    	Points_manche(vainqueur_manche: manche_gagnee perdants_manche: pm_zero_pts)
+			    ;
+			    
+			    Fin_Partie: 
+			    	vainqueur_total(nb_manches_gagnees)
+			    ;
+			}''')
+		Assertions.assertNotNull(result)
+		val errors = result.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+		
+		val HtmlCompilerXtend cmHtml = new HtmlCompilerXtend(result)
+		cmHtml.compileAndRun
+	}
+}

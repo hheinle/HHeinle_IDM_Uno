@@ -1,0 +1,261 @@
+package org.xtexthheinle.uno.tests;
+
+import com.google.inject.Inject
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.extensions.InjectionExtension
+import org.eclipse.xtext.testing.util.ParseHelper
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.^extension.ExtendWith
+import org.xtexthheinle.uno.myUno.Variante_UNO
+import java.io.FileWriter
+
+@ExtendWith(InjectionExtension)
+@InjectWith(MyUnoInjectorProvider)
+class XtendHtmlCompiler {
+
+	@Inject
+	ParseHelper<Variante_UNO> parseHelper
+
+	@Test
+	def void testCompileReglesOfficielles() {
+		val nom = "regles officielles"
+		var config = parseHelper.parse('''
+		nom_variante 'regles officielles'{
+			Depart: 
+				etat_main: cachee
+				nb_mains: 1
+				nb_cartes_main: 7
+				nb_talons: 1
+			;
+			
+			Manche: 
+			    Inversion(avec_carte_inversion)
+			    Nb_cartes_jouables(une_par_une)
+			    Pioche(nb_cartes_a_piocher: une_seule jouer_apres_pioche: droit_de_jouer)
+			   ;
+			   
+			   Fin_manche:
+			   	dire_uno_obligatoire
+			   	Points_manche(vainqueur_manche: vm_pts_selon_carte_adversaires perdants_manche: pm_zero_pts)
+			   ;
+			   
+			   Fin_Partie: 
+			   	vainqueur_total(score_le_plus_grd)
+			   ;
+			     
+		}''')
+		Assertions.assertNotNull(config)
+		val errors = config.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+
+		val html = configToHtml(config);
+		Assertions.assertNotNull(html);
+		val fw = new FileWriter(nom + ".html")
+		fw.write(html.toString)
+		fw.close
+	}
+
+	@Test
+	def void testCompileReglesInventees1() {
+		val nom = "regles inventees 1"
+		var config = parseHelper.parse('''
+		nom_variante 'regles inventées 1'{
+						Depart: 
+							etat_main: cachee
+							nb_mains: 3
+							nb_cartes_main: 4
+							nb_talons: 3
+							riviere
+							temps_limite: 9
+						;
+						
+						Manche: 
+						    Inversion(avec_carte_sept avec_carte_inversion)
+						    Tourner_mains(avec_carte_uno avec_carte_zero)
+						    Nb_cartes_jouables(plusieurs_a_la_fois_autorise)
+						    Cartes_1_a_9(suites suites_royales interception {mm_nb_couleur})
+						    Pioche(nb_cartes_a_piocher: au_plus_trois jouer_apres_pioche: droit_de_jouer)
+						    Cumul(cumul_carte_couleur cumul_carte_uno cumul_plus_2 cumul_plus_4)
+						    Contestations(plus4_contestable inter_contestable)
+						   ;
+						   
+						   Fin_manche:
+						   	dire_uno_obligatoire
+						   	Points_manche(vainqueur_manche: manche_gagnee perdants_manche: pm_zero_pts)
+						   ;
+						   
+						   Fin_Partie: 
+						   	vainqueur_total(nb_manches_gagnees)
+						   ;
+					}''')
+		Assertions.assertNotNull(config)
+		val errors = config.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+
+		val html = configToHtml(config);
+		Assertions.assertNotNull(html);
+		val fw = new FileWriter(nom + ".html")
+		fw.write(html.toString)
+		fw.close
+	}
+
+	def configToHtml(Variante_UNO config) '''
+		<html>
+		<title>«config.name»</title>
+			
+			<body>
+				<h1>«config.name»</h1>
+				
+				<h2>Configuration de départ : </h2>
+					<p>Pour cette variante, chaque joueur se voit distribuer 
+					«config.configuration_depart.main.nb_mains» main(s) de
+					«config.configuration_depart.main.nb_cartes_mains» cartes. Une main de joueur doit être 
+					«config.configuration_depart.main.etat_main».
+					<p>
+						
+					«IF config.configuration_depart.riviere !== null»
+						<p>Il doit y avoir une rivière. 
+						C'est-à-dire qu'il doit y avoir 4 cartes à côté du talon.
+						</p>
+					«ENDIF»
+					«IF config.configuration_depart.temps_limite !== null»
+						<p>Les joueurs disposent de «config.configuration_depart.secondes»
+						secondes durant leur tour pour jouer leur(s) carte(s).
+						</p>
+					«ENDIF»
+					
+				<h2>Déroulement d'une manche : </h2>
+					<p>Un joueur peut poser 
+						«IF config.manche.nb_cartes_jouables == "une_par_une"»
+							une seule carte par tour.
+						«ELSE»
+							plusieurs cartes par tour.
+						«ENDIF»
+					</p>
+					«IF config.manche.inversion !== null»
+						<h3>Inversion du sens de jeu : </h3>
+						<p>Le sens du jeu peut changer à l'aide de : <ul>
+							«IF config.manche.inversion.avec_carte_inversion !== null»
+								<li>la carte inversion classique</li>
+							«ENDIF»
+							«IF config.manche.inversion.avec_carte_sept !== null »
+								<li>les cartes avec le chiffre sept</li>
+							«ENDIF»
+						</ul>
+					«ENDIF»
+					«IF config.manche.tourner_les_mains !== null»
+						<h3>Tourner les mains : </h3>
+						<p>Tous les joueurs échangent leurs mains dans le sens du sens actuel à l'aide de : <ul>
+							«IF config.manche.tourner_les_mains.avec_carte_uno !== null»
+								<li>la carte UNO</li>
+							«ENDIF»
+							«IF config.manche.tourner_les_mains.avec_carte_zero !== null»
+								<li>les cartes avec le chiffre zero</li>
+							«ENDIF»
+						</ul>
+						</p>
+					«ENDIF»
+					<h3>Pioche : </h3><p>Quand un joueur doit piocher, il peut piocher 
+					«IF config.manche.pioche.nb_cartes_a_piocher == "une_seule"»
+						une seule carte.
+					«ELSE»
+						jusqu'à trois cartes.
+					«ENDIF»
+					</p>
+					<p>Après avoir piocher, le joueur 
+					«IF config.manche.pioche.jouer_apres_pioche == "droit_de_jouer"»
+						a le droit de jouer.
+					«ELSE»
+						n'a pas le droit de jouer.
+					«ENDIF»
+					</p>
+					«IF config.manche.contestations !== null»
+						<h3>Contestations : </h3>
+						<p>Les adversaires peuvent contester l'action du joueur : <ul>
+						«IF config.manche.contestations.inter_contestable !== null»
+							<li>s'il fait une interception</li>
+						«ENDIF»
+						«IF config.manche.contestations.plus4_contestable !== null»
+							<li>s'il pose une carte +4</li>
+						«ENDIF»
+						</ul>
+						</p>
+					«ENDIF»
+					«IF config.manche.cumul !== null»
+						<h3>Cumul de cartes : </h3>
+						<p>Il est possible de cumuler les cartes : <ul>
+						«IF config.manche.cumul.cumul_plus_2 !== null»
+							<li>les cartes +2</li>
+						«ENDIF»
+						«IF config.manche.cumul.cumul_plus_4 !== null»
+							<li>les cartes +4</li>
+						«ENDIF»
+						«IF config.manche.cumul.cumul_carte_couleur !== null»
+							<li>les cartes couleur</li>
+						«ENDIF»
+						«IF config.manche.cumul.cumul_carte_uno !== null»
+							<li>les cartes Uno</li>
+						«ENDIF»
+						</ul>
+						</p>
+					«ENDIF»
+					«IF config.manche.cartes_1_9 !== null»
+						<h3>Effets sur les cartes 1 à 9 : </h3><ul>
+						«IF config.manche.cartes_1_9.suites !== null»
+							<li>les suites sont autorisées</li>
+						«ENDIF»
+						«IF config.manche.cartes_1_9.suites_royales !== null»
+							<li>les suites royales sont autorisées</li>
+						«ENDIF»
+						«IF config.manche.cartes_1_9.interception !== null»
+							<li>il est possible d'interrompre ces suites en posant une carte de 
+							«IF config.manche.cartes_1_9.interception == "mm_nb"»
+								même nombre.
+							«ELSEIF config.manche.cartes_1_9.interception == "mm_couleur"»
+								même couleur.
+							«ELSE»		
+								même nombre et de même couleur.
+							«ENDIF»
+							</li>
+							</ul>
+						«ENDIF»
+					«ENDIF»
+					
+					<h2>Fin de manche : </h2>
+					«IF config.fin_manche.dire_uno_obligatoire !== null»
+						<p>Les joueurs doivent annoncer "UNO" en jouant leurs avant-dernières cartes.</p>
+					«ENDIF»
+					<p>Le premier joueur à s'être débarassé de toutes ses cartes remporte la manche. 
+					«IF config.fin_manche.points_manche.vainqueur_manche == "manche_gagnee"»
+						Ce joueur ne marque pas de points mais comptabilise une manche gagnée.
+					«ELSEIF config.fin_manche.points_manche.vainqueur_manche == "vm_pts_selon_carte_adversaires"»
+						Ce joueur marque des points en fonction des cartes que tous 
+						ses adversaires ont encore en main à cet instant.
+					«ELSE»
+						Ce joueur ne marque pas de points.
+					«ENDIF»
+					</p>
+					«IF config.fin_manche.points_manche.perdants_manche == "pm_zero_pts"»
+						<p>Les perdants ne marquent pas de points.
+					«ELSEIF config.fin_manche.points_manche.perdants_manche == "pm_pts_selon_cartes_restantes"»
+						<p>Les perdants marquent autant de points que les cartes qu'ils ont encore en main à cet instant.										
+					«ENDIF»
+					</p>
+				
+				<h2>Fin de la partie : </h2>
+					<p>Le vainqueur de la partie est le joueur qui 
+					«IF config.fin_partie.vainqueur_total == "score_le_plus_grd"»
+						a le plus grand score.
+					«ELSEIF config.fin_partie.vainqueur_total == "nb_manches_gagnees"»
+						comptabilise le plus de manche gagnées.
+					«ELSEIF config.fin_partie.vainqueur_total == "moins_de_500_pts"»
+						a moins de 500 points.
+					«ELSE»
+						a le plus petit score.
+					«ENDIF»
+				</p>
+			</body>
+		</html>
+	'''
+}

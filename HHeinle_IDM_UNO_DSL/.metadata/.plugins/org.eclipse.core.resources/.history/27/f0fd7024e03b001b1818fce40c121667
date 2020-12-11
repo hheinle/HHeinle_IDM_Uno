@@ -1,0 +1,78 @@
+package org.xtexthheinle.uno.tests;
+
+import com.google.inject.Inject
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.extensions.InjectionExtension
+import org.eclipse.xtext.testing.util.ParseHelper
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.^extension.ExtendWith
+import org.xtexthheinle.uno.myUno.Variante_UNO
+import java.io.FileWriter
+
+@ExtendWith(InjectionExtension)
+@InjectWith(MyUnoInjectorProvider)
+class HtmlCompilerXtend {
+	@Inject
+	ParseHelper<Variante_UNO> parseHelper
+
+	@Test
+	def void testCompileReglesOfficielles() {
+		val nom = "regles officielles"
+		var config = parseHelper.parse('''
+		nom_variante 'regles officielles'{
+			Depart: 
+				etat_main: cachee
+				nb_mains: 1
+				nb_cartes_main: 7
+				nb_talons: 1
+			;
+			
+			Manche: 
+			    Inversion(avec_carte_inversion)
+			    Nb_cartes_jouables(une_par_une)
+			    Pioche(nb_cartes_a_piocher: une_seule jouer_apres_pioche: droit_de_jouer)
+			   ;
+			   
+			   Fin_manche:
+			   	dire_uno_obligatoire
+			   	Points_manche(vainqueur_manche: vm_pts_selon_carte_adversaires perdants_manche: pm_zero_pts)
+			   ;
+			   
+			   Fin_Partie: 
+			   	vainqueur_total(score_le_plus_grd)
+			   ;
+			     
+		}''')
+		Assertions.assertNotNull(config)
+		val errors = config.eResource.errors
+		Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+
+		val html = configToHtml(config);
+		Assertions.assertNotNull(html);
+		val fw = new FileWriter(nom + ".html")
+		fw.write(html.toString)
+		fw.close
+	}
+
+	def configToHtml(Variante_UNO config) '''
+		<html>
+		<title>«config.name»</title>
+			
+			<body>
+				<h1>«config.name»</h1>
+				<h2>Configuration de départ : </h2>
+					
+				<h2>Déroulement d'une manche : </h2>
+				
+				<h2>Fin de manche : </h2>
+				
+				<h2>Fin de partie : </h2>
+				
+			</body>
+			
+			
+		</html>
+	'''
+}
+}

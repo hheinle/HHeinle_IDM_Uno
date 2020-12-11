@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="XtendHtmlCompiler" project="org.xtexthheinle.uno.tests" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="org.xtexthheinle.uno.tests.XtendHtmlCompiler" time="1.866" displayname="XtendHtmlCompiler" uniqueid="[engine:junit-jupiter]/[class:org.xtexthheinle.uno.tests.XtendHtmlCompiler]">
+    <testcase name="testCompileReglesOfficielles" classname="org.xtexthheinle.uno.tests.XtendHtmlCompiler" time="1.829" displayname="testCompileReglesOfficielles()" uniqueid="[engine:junit-jupiter]/[class:org.xtexthheinle.uno.tests.XtendHtmlCompiler]/[method:testCompileReglesOfficielles()]"/>
+    <testcase name="testCompileReglesInventees1" classname="org.xtexthheinle.uno.tests.XtendHtmlCompiler" time="0.037" displayname="testCompileReglesInventees1()" uniqueid="[engine:junit-jupiter]/[class:org.xtexthheinle.uno.tests.XtendHtmlCompiler]/[method:testCompileReglesInventees1()]"/>
+  </testsuite>
+</testrun>
